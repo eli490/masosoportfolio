@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio of Elvin Brian Opaki Masoso, Quality Engineer in Nairobi: test strategy, automation and release quality.">
+<title>Elvin Masoso Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a QA engineer's portfolio styled as a test run report. Dot-grid hero with an animated results card, tools strip, evidence bars, pipeline, skill chips, timeline, accent contact band. */
+:root {
+  --bg: #F2F5F6;
+  --surface: #FFFFFF;
+  --ink: #0F1B22;
+  --muted: #55656E;
+  --line: #D5DEE2;
+  --accent: #0A6B58;
+  --accent-ink: #FFFFFF;
+  --signal: #E8590C;
+  --pass-bg: #DDF1EA;
+  --amber: #A5530A;
+  --amber-bg: #FBEBD9;
+  --bar-base: #B9C6CC;
+  --dot: #C6D3D9;
+  --chip: #EAF0F2;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1216; --surface: #111B21; --ink: #E6EEF0; --muted: #93A5AD; --line: #243239;
+    --accent: #3FD0A8; --accent-ink: #06251D; --signal: #FF8A4C; --pass-bg: #12342B; --amber: #E0A15A; --amber-bg: #33240F;
+    --bar-base: #3A4B54; --dot: #1B2A31; --chip: #17252C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1216; --surface: #111B21; --ink: #E6EEF0; --muted: #93A5AD; --line: #243239;
+  --accent: #3FD0A8; --accent-ink: #06251D; --signal: #FF8A4C; --pass-bg: #12342B; --amber: #E0A15A; --amber-bg: #33240F;
+  --bar-base: #3A4B54; --dot: #1B2A31; --chip: #17252C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 84px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* top bar */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: -40px; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 14px; font-weight: 500; }
+.mono-badge { width: 34px; height: 34px; border-radius: 8px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 15px; letter-spacing: -0.02em; }
+.nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; font-size: 14px; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.theme { font: 500 13px var(--font-mono); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.theme:hover { border-color: var(--accent); }
+
+/* hero */
+.hero-band { position: relative; padding-top: 24px; }
+.hero-band::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px); background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 95%); mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+}
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 44px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.status { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 12.5px; padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.status i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2.2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.hero h1 { font-size: clamp(2.8rem, 8vw, 5.4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; }
+.hero h1 .l2 { display: block; color: var(--accent); }
+.hero h1 .mark { background: linear-gradient(transparent 80%, color-mix(in srgb, var(--signal) 70%, transparent) 80% 94%, transparent 94%); }
+.role { font-family: var(--font-mono); font-size: 14px; color: var(--muted); }
+.role b { color: var(--ink); font-weight: 500; }
+.lede { font-size: 1.1rem; max-width: 56ch; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; font: 500 15px var(--font-body); padding: 11px 20px; border-radius: 8px; text-decoration: none; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); transition: transform .15s ease, filter .15s ease; }
+.btn.ghost { background: var(--surface); color: var(--accent); }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+.report { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-width: 0; box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--ink) 45%, transparent); }
+.report-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.report-head .dots { display: flex; gap: 6px; margin-right: 6px; }
+.report-head .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.report-head .label { margin-left: auto; }
+.report ol { list-style: none; margin: 0; padding: 0; }
+.report li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: baseline; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.report li .id { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.report li .what { font-weight: 500; min-width: 0; }
+.report li .val { grid-column: 2; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.st { grid-row: 1; grid-column: 3; display: grid; justify-items: end; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.06em; }
+.st i { grid-area: 1 / 1; font-style: normal; padding: 2px 8px; border-radius: 3px; }
+.st .ok { background: var(--pass-bg); color: var(--accent); animation: ok .3s ease both; animation-delay: calc(var(--n) * .28s + .5s); }
+.st .run { background: var(--amber-bg); color: var(--amber); animation: run .3s ease both; animation-delay: calc(var(--n) * .28s + .5s); }
+@keyframes ok { from { opacity: 0; } to { opacity: 1; } }
+@keyframes run { from { opacity: 1; } to { opacity: 0; } }
+.report-foot { padding: 13px 16px; font-family: var(--font-mono); font-size: 13px; color: var(--accent); background: var(--pass-bg); animation: ok .4s ease both; animation-delay: 2.1s; }
+
+/* tools strip */
+.strip { overflow: hidden; border-block: 1px solid var(--line); padding-block: 14px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.strip-in { display: flex; width: max-content; animation: slide 46s linear infinite; }
+.strip ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 36px; padding-right: 36px; flex-shrink: 0; }
+.strip li { font-family: var(--font-mono); font-size: 14px; color: var(--muted); white-space: nowrap; }
+.strip li::before { content: "/"; color: var(--signal); margin-right: 10px; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* sections */
+section { display: flex; flex-direction: column; gap: 30px; scroll-margin-top: 16px; }
+.sec-head { display: flex; flex-direction: column; gap: 10px; }
+.sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.025em; }
+.sec-head h2 .mark { background: linear-gradient(transparent 82%, color-mix(in srgb, var(--signal) 60%, transparent) 82% 95%, transparent 95%); }
+.sec-head p { color: var(--muted); max-width: 60ch; }
+
+/* impact */
+.impact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px; min-width: 0; transition: border-color .2s ease, transform .2s ease; }
+.panel:hover { border-color: var(--accent); }
+.panel h3 { font-size: 1.25rem; }
+.bars { display: flex; flex-direction: column; gap: 14px; }
+.bar-row { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 12px; align-items: center; }
+.bar-row .k { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.fill { height: 34px; border-radius: 5px; background: var(--bar-base); display: flex; align-items: center; padding-inline: 12px; font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; width: var(--w); min-width: var(--min, 0px); transition: width 1s cubic-bezier(.2,.8,.2,1); }
+.fill.now { background: var(--accent); color: var(--accent-ink); }
+.fill.armed { width: 0; min-width: 0; padding-inline: 0; }
+.panel .note { color: var(--muted); font-size: 14.5px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.stat { display: flex; flex-direction: column; gap: 6px; padding: 22px; border-radius: 12px; background: var(--accent); color: var(--accent-ink); }
+.stat:nth-child(2) { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.stat:nth-child(2) b { color: var(--accent); }
+.stat b { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 3.8rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.stat span { font-size: 14.5px; opacity: .9; }
+.stat:nth-child(3) { background: var(--ink); color: var(--bg); }
+
+/* pipeline */
+.pipe { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.pipe li { position: relative; padding: 20px 16px 18px; border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; background: var(--surface); display: flex; flex-direction: column; gap: 6px; min-width: 0; transition: transform .2s ease; }
+.pipe li:hover { transform: translateY(-4px); }
+.pipe li:not(:last-child)::after { content: "›"; position: absolute; right: -12px; top: 50%; transform: translate(50%, -50%); width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); color: var(--signal); font-size: 16px; line-height: 1; z-index: 1; }
+.pipe li:last-child { background: var(--pass-bg); border-top-color: var(--signal); }
+.pipe .s { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.pipe b { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; }
+.pipe span.d { font-size: 13.5px; color: var(--muted); }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; transition: border-color .2s ease; }
+.skill:hover { border-color: var(--accent); }
+.skill h3 { font-size: 1.1rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font-family: var(--font-mono); font-size: 12.5px; padding: 4px 10px; border-radius: 6px; background: var(--chip); border: 1px solid var(--line); }
+.chips span.hl { background: var(--pass-bg); color: var(--accent); border-color: transparent; }
+
+/* experience timeline */
+.jobs { display: flex; flex-direction: column; border-left: 2px solid var(--line); margin-left: 6px; padding-left: 28px; }
+.job { position: relative; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px 32px; padding: 26px 0 30px; }
+.job::before { content: ""; position: absolute; left: -36px; top: 34px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); }
+.job.now::before { background: var(--signal); border-color: var(--signal); box-shadow: 0 0 0 5px color-mix(in srgb, var(--signal) 25%, transparent); }
+.job .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 8px; }
+.job h3 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.015em; }
+.job .org { color: var(--accent); font-weight: 600; margin-top: 4px; }
+.job ul { margin: 14px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 70ch; }
+.job li::marker { color: var(--signal); }
+.pill { display: inline-block; margin-left: 10px; vertical-align: middle; font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; padding: 2px 8px; border-radius: 4px; background: var(--signal); color: #fff; }
+
+/* credentials */
+.cred { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.list li:first-child { border-top: 0; padding-top: 0; }
+.list .y { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.wip { font-family: var(--font-mono); font-size: 11.5px; padding: 2px 8px; border-radius: 3px; background: var(--amber-bg); color: var(--amber); }
+
+/* contact */
+.contact { background: var(--accent); color: var(--accent-ink); border-radius: 16px; padding: clamp(24px, 5vw, 52px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; }
+.contact .label { color: inherit; opacity: .8; }
+.contact h2 { font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; }
+.contact .lines { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding-bottom: 12px; border-bottom: 1px solid color-mix(in srgb, var(--accent-ink) 30%, transparent); min-width: 0; }
+.line span.v { font-family: var(--font-mono); font-size: 15px; overflow-wrap: anywhere; min-width: 0; user-select: all; }
+.copy { font: 500 13px var(--font-body); background: var(--accent-ink); color: var(--accent); border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
+.copy:hover { filter: brightness(.94); }
+.contact .btn { background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); }
+footer { color: var(--muted); font-family: var(--font-mono); font-size: 12.5px; }
+
+@media (max-width: 900px) {
+  .hero, .impact, .contact, .cred, .skills { grid-template-columns: minmax(0, 1fr); }
+  .pipe { grid-template-columns: minmax(0, 1fr); }
+  .pipe li:not(:last-child)::after { right: auto; left: 50%; top: auto; bottom: -12px; transform: translate(-50%, 50%) rotate(90deg); }
+  .job { grid-template-columns: minmax(0, 1fr); }
+  .job .when { padding-top: 0; }
+  .stats { grid-template-columns: minmax(0, 1fr); }
+  .wrap { gap: 64px; }
+}
+@media (max-width: 480px) {
+  .jobs { padding-left: 22px; }
+  .job::before { left: -30px; }
+  .nav { gap: 4px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .status i, .strip-in, .st .ok, .st .run, .report-foot { animation: none; }
+  .st .run { display: none; }
+  .strip { overflow-x: auto; }
+  .fill { transition: none; }
+  .btn, .pipe li, .panel { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mono-badge" aria-hidden="true">EM</span>elvin masoso</div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#impact">Impact</a>
+      <a href="#approach">Approach</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#reach-me">Contact</a>
+      <button class="theme" id="theme" type="button" aria-label="Switch between light and dark theme">Theme</button>
+    </nav>
+  </header>
+
+  <main style="display:contents">
+    <div class="hero-band">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="status"><i></i>Available for full-time and remote work</span>
+          <h1>Elvin Brian <span class="l2">Opaki <span class="mark">Masoso</span></span></h1>
+          <p class="role"><b>Quality Engineer</b> · Test Strategy, Automation &amp; Release Quality · Nairobi, Kenya</p>
+          <p class="lede">I own quality across fintech and enterprise products, from the first requirement to the release sign-off. I set the test strategy, build the automation, wire it into the pipeline, and turn defect data into decisions for developers and product owners.</p>
+          <div class="cta">
+            <a class="btn" href="#reach-me">Get in touch</a>
+            <a class="btn ghost" href="#experience">See my experience</a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/masoso-elvin-6b59881b5/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn ghost" href="https://github.com/eli490/" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+
+        <aside class="report" aria-label="Results summary">
+          <div class="report-head"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="label">Test run · career results</span></div>
+          <ol>
+            <li><span class="id">TC-01</span><span class="what">Defect leakage</span><span class="st" style="--n:0"><i class="run">RUNNING</i><i class="ok">PASS</i></span><span class="val">80% lower</span></li>
+            <li><span class="id">TC-02</span><span class="what">Critical-flow automation</span><span class="st" style="--n:1"><i class="run">RUNNING</i><i class="ok">PASS</i></span><span class="val">40% to 80% coverage</span></li>
+            <li><span class="id">TC-03</span><span class="what">Regression cycle</span><span class="st" style="--n:2"><i class="run">RUNNING</i><i class="ok">PASS</i></span><span class="val">1 day to 3 hours</span></li>
+            <li><span class="id">TC-04</span><span class="what">Turnaround time</span><span class="st" style="--n:3"><i class="run">RUNNING</i><i class="ok">PASS</i></span><span class="val">80% faster</span></li>
+            <li><span class="id">TC-05</span><span class="what">Junior testers mentored</span><span class="st" style="--n:4"><i class="run">RUNNING</i><i class="ok">PASS</i></span><span class="val">3 testers</span></li>
+          </ol>
+          <div class="report-foot">5 of 5 passed · release sign-off: granted</div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="strip" aria-label="Tools and technologies">
+      <div class="strip-in">
+        <ul>
+          <li>Python</li><li>Selenium</li><li>Playwright</li><li>Appium</li><li>Jenkins</li><li>Docker</li><li>Kubernetes</li><li>Postman</li><li>REST Assured</li><li>Jira</li><li>TestRail</li><li>MySQL</li><li>MongoDB</li><li>AWS</li><li>Azure DevOps</li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>Python</li><li>Selenium</li><li>Playwright</li><li>Appium</li><li>Jenkins</li><li>Docker</li><li>Kubernetes</li><li>Postman</li><li>REST Assured</li><li>Jira</li><li>TestRail</li><li>MySQL</li><li>MongoDB</li><li>AWS</li><li>Azure DevOps</li>
+        </ul>
+      </div>
+    </div>
+
+    <section id="impact">
+      <div class="sec-head">
+        <span class="label">Evidence</span>
+        <h2>What changed when I took over <span class="mark">quality</span></h2>
+        <p>Measured results from my work at Smart Applications International.</p>
+      </div>
+      <div class="impact">
+        <div class="panel">
+          <h3>Automated coverage of critical user flows</h3>
+          <div class="bars">
+            <div class="bar-row"><span class="k">Before</span><div class="fill" style="--w:50%">40%</div></div>
+            <div class="bar-row"><span class="k">After</span><div class="fill now" style="--w:100%">80%</div></div>
+          </div>
+          <p class="note">Coverage doubled, so the flows that matter most are verified on every merge.</p>
+        </div>
+        <div class="panel">
+          <h3>Time to run a full regression</h3>
+          <div class="bars">
+            <div class="bar-row"><span class="k">Before</span><div class="fill" style="--w:100%">1 day</div></div>
+            <div class="bar-row"><span class="k">After</span><div class="fill now" style="--w:12.5%;--min:88px">3 hours</div></div>
+          </div>
+          <p class="note">Bars are drawn to scale, using a 24-hour day.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>80%</b><span>lower defect leakage</span></div>
+        <div class="stat"><b>80%</b><span>better turnaround time from automating repetitive work</span></div>
+        <div class="stat"><b>3</b><span>junior testers mentored</span></div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="sec-head">
+        <span class="label">How I work</span>
+        <h2>One path from requirement to <span class="mark">release</span></h2>
+        <p>I stay with a feature through every stage, including production support after it ships.</p>
+      </div>
+      <ol class="pipe">
+        <li><span class="s">STAGE 1</span><b>Requirements</b><span class="d">Review for clarity and testability. Agree acceptance criteria with developers and product owners.</span></li>
+        <li><span class="s">STAGE 2</span><b>Test design</b><span class="d">Plan, estimate and write test cases. Rank what to test by risk.</span></li>
+        <li><span class="s">STAGE 3</span><b>Automation</b><span class="d">Python, Selenium, Playwright and Appium suites, plus API checks in Postman and REST Assured.</span></li>
+        <li><span class="s">STAGE 4</span><b>Pipeline</b><span class="d">Jenkins, Docker and Kubernetes run the suites so builds are verified on every merge.</span></li>
+        <li><span class="s">STAGE 5</span><b>Sign-off</b><span class="d">Final QA approval based on results, open defect risk and release readiness.</span></li>
+      </ol>
+    </section>
+
+    <section id="skills">
+      <div class="sec-head">
+        <span class="label">Toolkit</span>
+        <h2>Skills</h2>
+      </div>
+      <div class="skills">
+        <div class="skill"><h3>Quality strategy</h3><div class="chips"><span class="hl">Test planning</span><span class="hl">Estimation</span><span>Test case design</span><span>Acceptance criteria</span><span>UAT</span><span>Exploratory testing</span><span>Requirement analysis</span><span>Testability reviews</span><span class="hl">Release sign-off</span></div></div>
+        <div class="skill"><h3>Metrics and control</h3><div class="chips"><span>Defect tracking</span><span>Root cause analysis</span><span>Defect trend reporting</span><span>Coverage tracking</span><span>Risk analysis</span><span>Six Sigma Yellow Belt</span></div></div>
+        <div class="skill"><h3>Test automation</h3><div class="chips"><span class="hl">Python</span><span class="hl">Selenium</span><span class="hl">Playwright</span><span class="hl">Appium</span><span>Java (basic)</span><span>JavaScript (basic)</span><span>JMeter (intro)</span></div></div>
+        <div class="skill"><h3>CI/CD and DevOps</h3><div class="chips"><span class="hl">Jenkins</span><span>Docker</span><span>Kubernetes</span><span>AWS</span><span>Azure DevOps</span></div></div>
+        <div class="skill"><h3>API and data</h3><div class="chips"><span class="hl">Postman</span><span>REST Assured</span><span>API validation</span><span>Error handling</span><span>MySQL</span><span>MongoDB</span></div></div>
+        <div class="skill"><h3>Modern systems</h3><div class="chips"><span>AI feature validation</span><span>Data-driven testing</span><span>Rule-based testing</span><span>Workflow validation</span><span>Low-code platforms</span></div></div>
+        <div class="skill"><h3>Tools</h3><div class="chips"><span>Jira</span><span>TestRail</span><span>Chrome DevTools</span></div></div>
+        <div class="skill"><h3>Leadership</h3><div class="chips"><span>Mentoring</span><span>Peer review</span><span>Cross-team collaboration</span><span>QA documentation</span></div></div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="sec-head">
+        <span class="label">History</span>
+        <h2>Experience</h2>
+      </div>
+      <div class="jobs">
+        <article class="job now">
+          <div class="when">07/2026 – Present</div>
+          <div>
+            <h3>Quality Assurance Engineer<span class="pill">CURRENT</span></h3>
+            <div class="org">Smart Applications International</div>
+            <ul>
+              <li>Own quality for multiple modules and products across web and mobile, from requirements through production support.</li>
+              <li>Shape QA strategy, estimation and acceptance criteria with developers and product owners.</li>
+              <li>Set automation standards for Python, Selenium, Playwright and Appium suites and integrate them into Jenkins, Docker and Kubernetes pipelines.</li>
+              <li>Give final QA sign-off before each deployment, based on test results, open defect risk and release readiness.</li>
+              <li>Report defect and coverage metrics from Jira and TestRail to stakeholders. Lowered defect leakage by 80% and improved turnaround time by 80%.</li>
+              <li>Test data-driven and configurable systems, plus AI-supported features for consistency, accuracy and edge cases.</li>
+              <li>Investigate production issues, isolate root causes and feed the findings back into test coverage.</li>
+              <li>Mentor junior testers, review their test cases and document processes so they can be repeated.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="when">03/2024 – 05/2026</div>
+          <div>
+            <h3>Quality Assurance Analyst</h3>
+            <div class="org">Smart Applications International</div>
+            <ul>
+              <li>Analyzed requirements with developers and product teams and designed test cases for multiple products.</li>
+              <li>Ran functional, regression and integration testing across web and mobile.</li>
+              <li>Built and maintained Python, Selenium, Playwright and Appium scripts, raising coverage of critical user flows.</li>
+              <li>Tested APIs with Postman and REST Assured and validated data in MySQL and MongoDB.</li>
+              <li>Supported CI/CD pipelines with Jenkins, Docker and Kubernetes, and began mentoring junior testers.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="when">04/2023 – 03/2024</div>
+          <div>
+            <h3>Quality Assurance Engineer</h3>
+            <div class="org">Fintech Group</div>
+            <ul>
+              <li>Designed and ran manual and automated tests for multiple applications on web and mobile.</li>
+              <li>Reviewed requirements to improve clarity and testability.</li>
+              <li>Ran regression and integration testing before releases, and tested business workflows and configurable features.</li>
+              <li>Used Postman and Chrome DevTools for API and UI debugging, and logged defects with detailed reproduction steps.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="when">2022 – 2023</div>
+          <div>
+            <h3>Quality Assurance Trainee / Intern</h3>
+            <div class="org">Fintech Group</div>
+            <ul>
+              <li>Supported manual, exploratory and cross-browser testing, and ran regression suites.</li>
+              <li>Built first experience with Selenium, Appium and JMeter.</li>
+              <li>Contributed to defect tracking and QA documentation.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="credentials">
+      <div class="sec-head">
+        <span class="label">Learning</span>
+        <h2>Certifications and education</h2>
+      </div>
+      <div class="cred">
+        <div class="panel">
+          <h3>Certifications</h3>
+          <ul class="list">
+            <li><span>ISTQB Certified Tester Foundation Level (CTFL)</span></li>
+            <li><span>Six Sigma Yellow Belt</span></li>
+            <li><span>Software Requirements Prioritization</span></li>
+            <li><span>Risk Analysis Tools</span></li>
+            <li><span>ISTQB Advanced Level Test Automation Engineering</span><span class="wip">IN PROGRESS</span></li>
+            <li><span>ISTQB Certified Tester AI Testing (CT-AI)</span><span class="wip">IN PROGRESS</span></li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Education</h3>
+          <ul class="list">
+            <li><span>BSc Information Technology</span><span class="wip">IN PROGRESS</span></li>
+            <li><span>Diploma in Information Technology, Nairobi Institute of Business Studies</span><span class="y">2021</span></li>
+            <li><span>ICDL Certificate, Institute of Advanced Technology</span><span class="y">2018</span></li>
+            <li><span>KCSE, Lubinu Boys High School</span><span class="y">2017</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="reach-me">
+      <div class="contact">
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+          <span class="label">Contact</span>
+          <h2>Need someone to own quality on your team?</h2>
+          <p>I am available for full-time and remote work. Send a note and I will reply with how I would approach your product.</p>
+        </div>
+        <div class="lines">
+          <div class="line"><span class="v" id="v-email">masosoelvin@gmail.com</span><button class="copy" type="button" data-target="v-email">Copy</button></div>
+          <div class="line"><span class="v" id="v-phone">+254 796 772 441</span><button class="copy" type="button" data-target="v-phone">Copy</button></div>
+          <div class="line"><span class="v">Nairobi, Kenya</span></div>
+          <div class="line"><span class="v">linkedin.com/in/masoso-elvin-6b59881b5</span><a class="copy" href="https://www.linkedin.com/in/masoso-elvin-6b59881b5/" target="_blank" rel="noopener">Open</a></div>
+          <div class="line"><span class="v">github.com/eli490</span><a class="copy" href="https://github.com/eli490/" target="_blank" rel="noopener">Open</a></div>
+          <div class="cta"><a class="btn" href="mailto:masosoelvin@gmail.com">Email me</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Elvin Brian Opaki Masoso · Quality Engineer · 2026</footer>
+</div>
+
+<script>
+(function () {
+  /* copy buttons */
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.target);
+      var text = el.textContent.trim();
+      function reset() { setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+      function fallback() {
+        try {
+          var r = document.createRange(); r.selectNodeContents(el);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+          btn.textContent = 'Selected'; reset();
+        } catch (e) {}
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; reset(); }, fallback);
+      } catch (e) { fallback(); }
+    });
+  });
+
+  /* theme toggle */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme');
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function label() { themeBtn.textContent = isDark() ? 'Light mode' : 'Dark mode'; }
+  try {
+    var saved = localStorage.getItem('em-theme');
+    if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  label();
+  themeBtn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('em-theme', next); } catch (e) {}
+    label();
+  });
+
+  /* bars grow when scrolled into view */
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fills = document.querySelectorAll('.fill');
+  if ('IntersectionObserver' in window && !reduce) {
+    fills.forEach(function (f) { f.classList.add('armed'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.remove('armed'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    fills.forEach(function (f) { io.observe(f); });
+    setTimeout(function () { fills.forEach(function (f) { f.classList.remove('armed'); }); }, 6000);
+  }
+})();
+</script>
+
+</body>
+</html>
